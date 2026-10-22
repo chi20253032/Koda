@@ -65,6 +65,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -697,7 +698,6 @@ private fun ManagerRow(
     }
 }
 
-@Composable
 private enum class ManagedSubscriptionSort { SUBSCRIPTION_DATE, NAME, RECENT_UPLOAD, SUBSCRIBER_COUNT, MANUAL }
 
 private fun parseSubscriberCount(value: String?): Long? {
