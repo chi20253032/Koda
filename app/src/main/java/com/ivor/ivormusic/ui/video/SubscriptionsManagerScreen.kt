@@ -702,7 +702,7 @@ private enum class ManagedSubscriptionSort { SUBSCRIPTION_DATE, NAME, RECENT_UPL
 
 private fun parseSubscriberCount(value: String?): Long? {
     if (value.isNullOrBlank()) return null
-    val match = Regex("""([0-9]+(?:[.,][0-9]+)?)\\s*([KMB万億]?)""", RegexOption.IGNORE_CASE)
+    val match = Regex("""([0-9]+(?:[.,][0-9]+)?)\s*([KMB万億]?)""", RegexOption.IGNORE_CASE)
         .find(value.replace(",", "")) ?: return null
     val amount = match.groupValues[1].toDoubleOrNull() ?: return null
     val multiplier = when (match.groupValues[2].uppercase()) {
