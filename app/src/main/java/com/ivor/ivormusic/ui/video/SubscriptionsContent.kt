@@ -308,11 +308,13 @@ fun SubscriptionsContent(
         }.thenBy { it.name.lowercase() }
         when (channelSort) {
             "NAME" -> channels.sortedBy { it.name.lowercase() }
-            "OLDEST" -> channels.sortedBy { channel ->
-                newestUploadById[channel.channelId]
-                    ?: newestUploadByName[channel.name.trim().lowercase()]
-                    ?: Long.MIN_VALUE
-            }.thenBy { it.name.lowercase() }
+            "OLDEST" -> channels.sortedWith(
+                compareBy<SubscribedChannel> { channel ->
+                    newestUploadById[channel.channelId]
+                        ?: newestUploadByName[channel.name.trim().lowercase()]
+                        ?: Long.MIN_VALUE
+                }.thenBy { it.name.lowercase() }
+            )
             "OFFICIAL", "RECENT" -> channels.sortedWith(byRecent)
             else -> channels.sortedWith(byRecent)
         }
