@@ -70,7 +70,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     // Cached account-history frequency; load only when requested, off the UI thread.
     private val _channelWatchCounts = MutableStateFlow<Map<String, Int>>(
         runCatching {
-            val raw = application.getSharedPreferences("channel_watch_frequency", 0).getString("counts", null) ?: "{}"
+            val raw = getApplication<Application>().getSharedPreferences("channel_watch_frequency", 0).getString("counts", null) ?: "{}"
             val json = org.json.JSONObject(raw)
             buildMap { val keys = json.keys(); while (keys.hasNext()) { val key = keys.next(); put(key, json.optInt(key, 0)) } }
         }.getOrDefault(emptyMap())
@@ -99,7 +99,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 if (counts.isNotEmpty()) {
                     val json = org.json.JSONObject()
                     counts.forEach { (id, count) -> json.put(id, count) }
-                    application.getSharedPreferences("channel_watch_frequency", 0).edit().putString("counts", json.toString()).apply()
+                    getApplication<Application>().getSharedPreferences("channel_watch_frequency", 0).edit().putString("counts", json.toString()).apply()
                     _channelWatchCounts.value = counts
                 }
             } catch (e: kotlinx.coroutines.CancellationException) {
