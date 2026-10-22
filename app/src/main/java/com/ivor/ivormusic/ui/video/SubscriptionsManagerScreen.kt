@@ -716,6 +716,7 @@ private fun parseSubscriberCount(value: String?): Long? {
     return (amount * multiplier).toLong()
 }
 
+@Composable
 private fun ManagedChannelRow(
     channel: LocalSubscription,
     groupCount: Int,
