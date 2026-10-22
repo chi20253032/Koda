@@ -194,7 +194,10 @@ fun SubscriptionsManagerScreen(
 
     // Names and avatars for imported channels arrive later than the channels
     // themselves; kick that off when the list is actually being looked at.
-    LaunchedEffect(Unit) { viewModel.backfillLocalChannelProfiles(); viewModel.loadSubscriptionFeed() }
+    LaunchedEffect(Unit) { viewModel.backfillLocalChannelProfiles() }
+    LaunchedEffect(sortMode) {
+        if (sortMode == ManagedSubscriptionSort.RECENT_UPLOAD) viewModel.loadSubscriptionFeed()
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
